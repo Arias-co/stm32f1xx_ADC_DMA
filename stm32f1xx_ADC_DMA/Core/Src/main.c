@@ -23,6 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+//#include
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -260,6 +262,13 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
 	/* cambia el estado del pin cuando se  termina las 120 conversiones */
     HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    /* inicia nuevamente las 120 conversiones ya que el DMA esta
+     * configurado en modo normal, lo cual se detiene al terminar
+     * las cnversiones. tambien puedes optar por usarlo en modo circular
+     * para que el DMA no se detenga la terminar las conversiones.
+     */
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t *)datos, 120);
+
 
 }
 /* USER CODE END 4 */
